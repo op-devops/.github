@@ -20,21 +20,39 @@
 flowchart LR
     B[浏览器] --> O[OpenResty<br/>静态资源 + 反向代理]
     O --> A[APISIX<br/>API 网关]
-    A --> AG[auth-gateway]
-    A --> CG[cmdb-gateway]
-    A --> TG[terminal-gateway]
-    A --> RG[cron-gateway]
-    AG -- gRPC --> AS[auth-service]
-    CG -- gRPC --> CS[cmdb-service]
-    TG -- gRPC --> TS[terminal-service]
-    RG -- gRPC --> RS[cron-service]
+
+    subgraph GW[FastAPI 网关]
+        AG[auth-gateway]
+        CG[cmdb-gateway]
+        TG[terminal-gateway]
+        RG[cron-gateway]
+    end
+
+    subgraph SVC[gRPC 服务]
+        AS[auth-service]
+        CS[cmdb-service]
+        TS[terminal-service]
+        RS[cron-service]
+    end
+
+    A --> GW
+    AG -- gRPC --> AS
+    CG -- gRPC --> CS
+    TG -- gRPC --> TS
+    RG -- gRPC --> RS
     CG & TG & RG -. 鉴权 VerifyToken .-> AS
+
+    SVC --> DB[(MySQL<br/>每个服务独立库)]
+    SVC --> R[(Redis)]
+    GW -. 限速计数 .-> R
     RS -- 调度指令 --> MQ[(RabbitMQ)]
-    N[(Nacos<br/>注册发现 + 配置)] -.- AG & CG & TG & RG & AS & CS & TS & RS
+
+    N[(Nacos<br/>注册发现 + 配置)] -.- GW & SVC
 ```
 
 - **请求链路**：浏览器 → OpenResty → APISIX → 各模块网关 → gRPC 服务。网关以随机端口注册到 Nacos，由 APISIX 服务发现，前端不需要知道服务具体在哪。
 - **统一鉴权**：各业务网关调用 `auth-service` 的 `VerifyToken` 校验登录态和权限码，业务服务自己不保存用户信息。
+- **存储隔离**：MySQL、Redis 是全局共享的一套，每个服务用自己的库和只有 DML 权限的账号，Redis 按 db 编号隔开；表结构变更走 Alembic，由 DBA 账号单独执行。
 - **配置集中**：运行配置全部放在 Nacos，服务只靠 `NACOS_*` 环境变量引导，大部分配置支持热更新。
 - **契约优先**：跨服务调用只共享 `.proto`，通过 `contracts` 仓库分发，各项目自己生成 stub。
 
