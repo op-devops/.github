@@ -94,3 +94,32 @@ cd web && pnpm install && pnpm dev:ele    # http://localhost:5777
 ```
 
 各模块的详细说明见对应仓库的 README。
+
+## 截图
+
+<table>
+  <tr>
+    <td width="50%"><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/02.png" alt="登录"><p align="center">登录（图形验证码）</p></td>
+    <td width="50%"><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/03.png" alt="主机管理"><p align="center">主机管理</p></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/04.png" alt="Web 终端"><p align="center">Web 终端</p></td>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/11.png" alt="计划任务"><p align="center">计划任务</p></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/06.png" alt="录像回放"><p align="center">会话录像列表</p></td>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/07.png" alt="会话回放"><p align="center">会话回放</p></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/05.png" alt="命令审计"><p align="center">命令审计</p></td>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/10.png" alt="登录日志"><p align="center">登录日志</p></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/08.png" alt="账户管理"><p align="center">账户管理</p></td>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/09.png" alt="角色管理"><p align="center">角色管理</p></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/01.png" alt="Nacos 服务列表"><p align="center">Nacos：网关与服务注册情况</p></td>
+    <td><img src="https://raw.githubusercontent.com/op-devops/.github/main/profile/images/00.png" alt="容器运行状态"><p align="center">中间件与各服务容器运行状态</p></td>
+  </tr>
+</table>
